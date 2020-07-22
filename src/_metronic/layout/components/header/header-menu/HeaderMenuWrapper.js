@@ -39,7 +39,7 @@ export function HeaderMenuWrapper() {
                     {/*begin::Header Logo*/}
                     <div className="header-logo">
                         <Link to="/">
-                            <img alt="logo" src={getHeaderLogo()}/>
+                            <h2>Qonstanta</h2>
                         </Link>
                     </div>
                     {/*end::Header Logo*/}

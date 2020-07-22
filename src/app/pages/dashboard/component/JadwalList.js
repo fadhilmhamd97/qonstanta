@@ -13,6 +13,10 @@ import IconButton from '@material-ui/core/IconButton';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import Typography from '@material-ui/core/Typography';
 import { Link } from "react-router-dom";
+import {Badge, Button} from "react-bootstrap";
+
+import { toAbsoluteUrl } from "../../../../_metronic/_helpers";
+
 
 export function JadwalList({ props }) {
 
@@ -21,9 +25,33 @@ export function JadwalList({ props }) {
   useEffect(() => {
         getModules().then(res => {
             console.info(res.data.data)
-            setModules(res.data.data);
+            let _p = [];
+            res.data.data.map((v, i) => {
+                if(v.code === 'TOPA-SIMAKUI-SMA-IPA-3'){
+                  _p.push({
+                    title: 'IPA',
+                    limit: v.freeLimit,
+                    name: v.name,
+                    code: v.code
+                  })
+                }
+                if(v.code === 'TOPA-SIMAKUI-SMA-IPS-3'){
+                  _p.push({
+                    title: 'IPS',
+                    limit: v.freeLimit,
+                    name: v.name,
+                    code: v.code
+                  })
+                }
+            })
+            setModules([..._p]);
         })
   },[])
+
+  const tempImage = [
+    toAbsoluteUrl("/media/demos/ujian-ipa.jpg"),
+    toAbsoluteUrl("/media/demos/ujian-ips.jpg")
+  ]
 
 
   const useStyles = makeStyles(theme => ({
@@ -48,35 +76,32 @@ export function JadwalList({ props }) {
   }));
 
 
-  const CardComponent = ({title, code, price, priceMember, freeLimit}) => {
+  const CardComponent = ({title, code, limit, name, freeLimit, image}) => {
     const classes = useStyles();
     
     return (
         <Card className={classes.card}>
           <CardHeader
-            action={
-              <IconButton aria-label="Settings">
-                <MoreVertIcon />
-              </IconButton>
-            }
-            title={code}
-            subheader={price}
+            title={title}
           />
           <CardMedia
             className={classes.media}
-            image="/static/images/cards/paella.jpg"
-            title="Paella dish"
+            image={image}
           />
           <CardContent>
             <Typography variant="body2" color="textSecondary" component="p">
-              {title}
+              {name}
             </Typography>
+            <Button variant="primary" style={{marginTop: 2 + 'em'}}>
+                <span style={{fontSize: 11 + 'px'}}>Try out gratis tersisa:</span> <Badge variant="light">{limit}</Badge>
+            </Button>
           </CardContent>
-          <CardActions style={{margin: 'auto', position: 'relative', left: 40 +'%'}} disableSpacing>
+          <CardActions style={{float: 'right', position: 'relative'}} disableSpacing>
             <Link to={`module/register/${code}`}>
-                <IconButton aria-label="Ikut Ujian">
+            <Button variant="success" size="xs" block>
                     <EditIcon />
-                </IconButton>
+                &nbsp; Registrasi
+            </Button>
             </Link>
           </CardActions>
         </Card>
@@ -97,7 +122,7 @@ export function JadwalList({ props }) {
 
           <div className="row m-0">
             {propModules.map((v, i) => {
-                return(<CardComponent key={i} title={v.name} code={v.code} price={v.price} />)
+                return(<CardComponent key={i} name={v.name} title={v.title} code={v.code} limit={v.limit} image={tempImage[i]} />)
             })}
           </div>
 

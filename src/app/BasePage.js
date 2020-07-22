@@ -34,7 +34,6 @@ export default function BasePage() {
                 }
                 <ContentRoute path="/dashboard" component={DashboardPage}/>
 
-                //Register modules
                 <Route path="/module/register/:id" component={RegisterModulePage} />
 
                 <ContentRoute path="/builder" component={BuilderPage}/>

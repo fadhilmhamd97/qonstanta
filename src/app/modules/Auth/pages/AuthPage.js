@@ -8,7 +8,7 @@ import Registration from "./Registration";
 import ForgotPassword from "./ForgotPassword";
 import "../../../../_metronic/_assets/sass/pages/login/classic/login-1.scss";
 
-export function AuthPage() {
+export function AuthPage() {  
 
   const RedirectButton = () => {
     if(window.location.href.split('/')[window.location.href.split('/').length - 1] === 'registration'){

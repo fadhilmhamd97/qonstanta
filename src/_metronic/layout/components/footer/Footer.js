@@ -28,11 +28,11 @@ export function Footer() {
             rel="noopener noreferrer"
             className="text-dark-75 text-hover-primary"
           >
-            Keenthemes
+            Qonstanta
           </a>
         </div>
         <div className="nav nav-dark order-1 order-md-2">
-          <a
+          {/* <a
             href="http://keenthemes.com/metronic"
             target="_blank"
             rel="noopener noreferrer"
@@ -48,14 +48,14 @@ export function Footer() {
           >
             Team
           </a>
-          <a
-            href="http://keenthemes.com/metronic"
+          <a */}
+            {/* href="http://keenthemes.com/metronic"
             target="_blank"
             rel="noopener noreferrer"
             className="nav-link pl-3 pr-0"
           >
             Contact
-          </a>
+          </a> */}
         </div>
       </div>
     </div>

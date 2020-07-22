@@ -34,7 +34,8 @@ export function Aside() {
                 {/* begin::Header Logo */}
                 <div className="header-logo">
                   <Link to="">
-                    <img alt="logo" style={{maxWidth: 12 + 'px'}} src={layoutProps.headerLogo}/>
+                    {/* <img alt="logo" style={{maxWidth: 12 + 'px'}} src={layoutProps.headerLogo}/> */}
+                    <h3>Qonstanta</h3>
                   </Link>
                 </div>
                 <h2>  
