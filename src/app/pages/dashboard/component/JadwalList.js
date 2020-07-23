@@ -18,13 +18,12 @@ import {Badge, Button} from "react-bootstrap";
 import { toAbsoluteUrl } from "../../../../_metronic/_helpers";
 
 
-export function JadwalList({ props }) {
+export function JadwalList({ onChoose }) {
 
   const [propModules, setModules] = useState([]);
 
   useEffect(() => {
         getModules().then(res => {
-            console.info(res.data.data)
             let _p = [];
             res.data.data.map((v, i) => {
                 if(v.code === 'TOPA-SIMAKUI-SMA-IPA-3'){
@@ -76,8 +75,13 @@ export function JadwalList({ props }) {
   }));
 
 
-  const CardComponent = ({title, code, limit, name, freeLimit, image}) => {
+  const CardComponent = ({title, code, limit, name, freeLimit, image, moduleChoose}) => {
     const classes = useStyles();
+
+    //Avoid Zombie Children
+    const handleClick = () => {
+      moduleChoose({name, code, title})
+    }
     
     return (
         <Card className={classes.card}>
@@ -93,12 +97,12 @@ export function JadwalList({ props }) {
               {name}
             </Typography>
             <Button variant="primary" style={{marginTop: 2 + 'em'}}>
-                <span style={{fontSize: 11 + 'px'}}>Try out gratis tersisa:</span> <Badge variant="light">{limit}</Badge>
+                <span style={{fontSize: 11 + 'px'}}>Try out gratis untuk:</span> <Badge variant="light">{limit}</Badge>
             </Button>
           </CardContent>
           <CardActions style={{float: 'right', position: 'relative'}} disableSpacing>
             <Link to={`module/register/${code}`}>
-            <Button variant="success" size="xs" block>
+            <Button onClick={() => handleClick()} variant="success" size="xs" block>
                     <EditIcon />
                 &nbsp; Registrasi
             </Button>
@@ -122,7 +126,7 @@ export function JadwalList({ props }) {
 
           <div className="row m-0">
             {propModules.map((v, i) => {
-                return(<CardComponent key={i} name={v.name} title={v.title} code={v.code} limit={v.limit} image={tempImage[i]} />)
+                return(<CardComponent moduleChoose={onChoose} key={i} name={v.name} title={v.title} code={v.code} limit={v.limit} image={tempImage[i]} />)
             })}
           </div>
 

@@ -4,6 +4,7 @@ import {LayoutSplashScreen, ContentRoute} from "../_metronic/layout";
 import {BuilderPage} from "./pages/BuilderPage";
 import {MyPage} from "./pages/MyPage";
 import {DashboardPage} from "./pages/dashboard/index";
+import { ForgetPassword } from "./pages/forgetPassword/index";
 
 const GoogleMaterialPage = lazy(() =>
   import("./modules/GoogleMaterialExamples/GoogleMaterialPage")
@@ -17,6 +18,10 @@ const ECommercePage = lazy(() =>
 
 const RegisterModulePage = lazy(() =>
   import("./pages/cart/index")
+);
+
+const TryoutHistoryPage = lazy(() =>
+  import("./pages/history/index")
 );
 
 export default function BasePage() {
@@ -35,6 +40,8 @@ export default function BasePage() {
                 <ContentRoute path="/dashboard" component={DashboardPage}/>
 
                 <Route path="/module/register/:id" component={RegisterModulePage} />
+                <Route path="/tryout/history" component={TryoutHistoryPage} />
+                <Route path="/profile/change-password" component={ForgetPassword} />
 
                 <ContentRoute path="/builder" component={BuilderPage}/>
                 <ContentRoute path="/my-page" component={MyPage}/>

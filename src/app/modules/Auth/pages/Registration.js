@@ -137,7 +137,7 @@ function Registration(props) {
       </div>
 
       <SweetAlert success title="Registrasi Berhasil!" show={propSuccessAlert} onConfirm={redirectToLogin} onCancel={() => setSuccessAlert(false)}>
-          Registrasi Berhasil, Anda dapat login ke dalam sistem
+          Registrasi Berhasil, Cek email kamu untuk melakukan aktivasi akun
       </SweetAlert>
 
       <form

@@ -1,4 +1,5 @@
-import React, {useMemo} from "react";
+import React, {useMemo, useEffect, useState} from "react";
+import { useSelector } from "react-redux";
 import objectPath from "object-path";
 // LayoutContext
 import {useHtmlClassService} from "../_core/MetronicLayout";
@@ -15,6 +16,15 @@ import {ScrollTop} from "./extras/ScrollTop";
 import {StickyToolbar} from "./extras/StickyToolbar";
 
 export function Layout({ children }) {
+    
+    const {user} = useSelector(state => state.auth);
+
+    const [propUser, setUser] = useState('')
+
+    useEffect(() => {
+        setUser(localStorage.getItem('userProps'))
+    })
+
     const uiService = useHtmlClassService();
     // Layout settings (cssClasses/cssAttributes)
     const layoutProps = useMemo(() => {
@@ -71,7 +81,7 @@ export function Layout({ children }) {
                 </div>
                 {/*end::Page*/}
             </div>
-            <QuickUser/>
+            <QuickUser title={propUser}/>
             <QuickPanel/>
             <ScrollTop/>
             <StickyToolbar/>

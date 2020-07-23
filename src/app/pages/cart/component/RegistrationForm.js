@@ -1,4 +1,4 @@
-import React,{useEffect, useState, useRef} from "react";
+import React,{useEffect, useState} from "react";
 import clsx from "clsx";
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
@@ -47,7 +47,7 @@ const useStyles = makeStyles(theme => ({
       },
   }));
 
-const RegistrationForm = ({title}) => {
+const RegistrationForm = ({title, props, packet, packetDescription}) => {
 
     const _title = title;
 
@@ -93,8 +93,19 @@ const RegistrationForm = ({title}) => {
                 if(res){
                     setAlert(true)
                 }
+            }).catch(err => {
+                const error = `${err.message}`;
+                if(error.includes('status code 409')){
+                    alert('Kamu sudah mendaftar tryout ini, silahkan pilih Tryout lain')
+                    props.history.push('/dashboard')
+                }
             })
 
+    }
+
+
+    const redirectToList = () => {
+        props.history.push('/dashboard')
     }
 
     const [propDetail, setDetail] = useState([])
@@ -179,7 +190,25 @@ const RegistrationForm = ({title}) => {
         </FormControl>
         <Grid container>
             <Grid item xs={6}>
-                <FormControl variant="outlined" style={{width: 80 + '%'}} className={classes.formControl}>
+                <FormControl style={{width: 80 + '%'}} variant="outlined" className={classes.formControl}>
+                    <InputLabel htmlFor="outlined-age-simple">
+                        Provinsi
+                    </InputLabel>
+                    <Select
+                    input={<OutlinedInput name="age" id="outlined-age-simple" />}
+                    onChange={value => handleProvinceChange(value)}
+                    >
+                        <MenuItem value="">
+                            <em>None</em>
+                        </MenuItem>
+                        {propProvince.map((v, i) => {
+                            return(<MenuItem key={i} value={v.id}>{v.nama}</MenuItem>)
+                        })}
+                    </Select>
+                </FormControl>
+            </Grid>
+            <Grid item xs={6}>
+                <FormControl variant="outlined" style={{width: 80 + '%', float: 'right'}} className={classes.formControl}>
                     <InputLabel htmlFor="outlined-age-simple">
                         Kabupaten
                     </InputLabel>
@@ -195,24 +224,6 @@ const RegistrationForm = ({title}) => {
                             return(<MenuItem key={i} value={v.id}>
                             <em>{v.nama}</em>
                         </MenuItem>)
-                        })}
-                    </Select>
-                </FormControl>
-            </Grid>
-            <Grid item xs={6}>
-                <FormControl style={{width: 80 + '%', float: 'right'}} variant="outlined" className={classes.formControl}>
-                    <InputLabel htmlFor="outlined-age-simple">
-                        Provinsi
-                    </InputLabel>
-                    <Select
-                    input={<OutlinedInput name="age" id="outlined-age-simple" />}
-                    onChange={value => handleProvinceChange(value)}
-                    >
-                        <MenuItem value="">
-                            <em>None</em>
-                        </MenuItem>
-                        {propProvince.map((v, i) => {
-                            return(<MenuItem key={i} value={v.id}>{v.nama}</MenuItem>)
                         })}
                     </Select>
                 </FormControl>
@@ -244,8 +255,10 @@ const RegistrationForm = ({title}) => {
             </Grid>
         </div>
 
-        <SweetAlert success title="Registrasi Berhasil!" show={propAlert} onConfirm={() => setAlert(false)} onCancel={() => setAlert(false)}>
-            Registrasi Berhasil, Selamat anda telah berhasil registrasi {propForm.tryoutScheduleCode}
+        <SweetAlert success title="Registrasi Berhasil!" show={propAlert} onConfirm={redirectToList} onCancel={() => setAlert(false)}>
+            <span>Registrasi Berhasil, Selamat anda telah berhasil registrasi {packetDescription} </span>
+            <p style={{fontSize: 11 + 'px', color: 'red'}}><b>({packet})</b></p>
+            <p>Harap mengecek email untuk melanjutkan pembayaran</p>
         </SweetAlert>
 
         <JadwalComponent show={propDetailShow} detail={propDetail} />

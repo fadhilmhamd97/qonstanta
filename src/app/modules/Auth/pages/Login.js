@@ -5,8 +5,10 @@ import * as Yup from "yup";
 import { connect } from "react-redux";
 import { FormattedMessage, injectIntl } from "react-intl";
 import * as auth from "../_redux/authRedux";
-import { login } from "../_redux/authCrud";
+import { login, forgotPassword } from "../_redux/authCrud";
 import { Redirect } from "react-router-dom";
+import SweetAlert from "react-bootstrap-sweetalert";
+import { Modal, Form, Button } from "react-bootstrap";
 
 /*
   INTL (i18n) docs:
@@ -54,6 +56,26 @@ function Login(props) {
     setLoading(false);
   };
 
+  const delegateForgotPassword = ev => {
+    ev.preventDefault();
+    setModalFlag(true)
+    //Create Request
+  }
+
+  const changePasswordDelegate = value => {
+    forgotPassword(value).then(res => {
+      setAlert(true)
+    },
+    err=> {
+      setDangerAlert(true)
+    })
+  }
+
+  const [propModalFlag, setModalFlag] = useState(false)
+
+  const [propAlert, setAlert] = useState(false)
+  const [propDangerAlert, setDangerAlert] = useState(false)
+
   const getInputClasses = (fieldname) => {
     if (formik.touched[fieldname] && formik.errors[fieldname]) {
       return "is-invalid";
@@ -66,6 +88,44 @@ function Login(props) {
     return "";
   };
 
+  const JadwalComponent = ({modalGrabber, show, controlModal}) => {
+
+    const [propEmail, setEmail] = useState('')
+
+    const handlerEvent = () => {
+      modalGrabber(propEmail)
+      controlModal()
+    }
+
+    return(<Modal
+        
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        show={show}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title id="contained-modal-title-vcenter">
+            Masukkan email kamu
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+        <Form>
+          <Form.Group controlId="formBasicEmail">
+            <Form.Label>Email address</Form.Label>
+            <Form.Control type="email" placeholder="Enter email" onChange={ev => setEmail(ev.target.value)} />
+          </Form.Group>
+        </Form>
+        <Button variant="primary" onClick={handlerEvent}>
+            Submit
+        </Button>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={controlModal}>Close</Button>
+        </Modal.Footer>
+      </Modal>)
+  }
+
   const formik = useFormik({
     initialValues,
     validationSchema: LoginSchema,
@@ -76,6 +136,7 @@ function Login(props) {
           .then(({data}) => {
             disableLoading();
             props.login({sessionToken: data.data.accessToken, email: values.email, userProps: data.data.user});
+            localStorage.setItem('userProps',values.email)
           })
           .catch(err => {
             disableLoading();
@@ -146,14 +207,15 @@ function Login(props) {
             </div>
           ) : null}
         </div>
-        <div className="form-group d-flex flex-wrap justify-content-between align-items-center" style={{float: 'right'}}>
-          {/* <Link
-            to="/auth/forgot-password"
+        <Link
+            to="#"
+            onClick={ev => delegateForgotPassword(ev)}
             className="text-dark-50 text-hover-primary my-3 mr-2"
             id="kt_login_forgot"
           >
-            <FormattedMessage id="AUTH.GENERAL.FORGOT_BUTTON" />
-          </Link> */}
+            Lupa Password
+          </Link>
+        <div className="form-group d-flex flex-wrap justify-content-between align-items-center" style={{float: 'right'}}>
           <button
             id="kt_login_signin_submit"
             type="submit"
@@ -166,6 +228,15 @@ function Login(props) {
         </div>
       </form>
       {/*end::Form*/}
+      <SweetAlert success title="Lupa Password Berhasil!" show={propAlert} onConfirm={() => setAlert(false)} onCancel={() => setAlert(false)}>
+        Silahkan cek akun email kamu untuk mereset password
+      </SweetAlert>
+
+      <SweetAlert success title="Lupa Password Berhasil!" show={propDangerAlert} onConfirm={() => setDangerAlert(false)} onCancel={() => setDangerAlert(false)}>
+        Terjadi kesalahan saat mengubah password
+      </SweetAlert>
+
+      <JadwalComponent modalGrabber={changePasswordDelegate} show={propModalFlag} controlModal={() => setModalFlag(false)}  />
     </div>
   );
 }

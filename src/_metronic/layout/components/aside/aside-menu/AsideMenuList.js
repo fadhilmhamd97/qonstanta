@@ -4,6 +4,9 @@ import {useLocation} from "react-router";
 import {NavLink}  from "react-router-dom";
 import SVG from "react-inlinesvg";
 import {toAbsoluteUrl, checkIsActive} from "../../../../_helpers";
+import EditIcon from '@material-ui/icons/Edit';
+import ScheduleIcon from '@material-ui/icons/Schedule';
+import EventNoteIcon from '@material-ui/icons/EventNote';
 
 export function AsideMenuList({ layoutProps }) {
   const location = useLocation();
@@ -17,18 +20,64 @@ export function AsideMenuList({ layoutProps }) {
       <>
         {/* begin::Menu Nav */}
         <ul className={`menu-nav ${layoutProps.ulClasses}`}>
-          {/*begin::1 Level*/}
-          <li
-              className={`menu-item ${getMenuItemActive("/dashboard", false)}`}
-              aria-haspopup="true"
-          >
-            <NavLink className="menu-link" to="/dashboard">
-            <span className="svg-icon menu-icon">
-              <SVG src={toAbsoluteUrl("/media/svg/icons/Design/Layers.svg")}/>
-            </span>
-              <span className="menu-text">Try Out</span>
-            </NavLink>
-          </li>
+
+                {/*begin::2 Level*/}
+                <li
+                    className={`menu-item menu-item-submenu ${getMenuItemActive(
+                        "/google-material/inputs", true
+                    )}`}
+                    aria-haspopup="true"
+                    data-menu-toggle="hover"
+                >
+                  <NavLink className="menu-link menu-toggle" to="/google-material/inputs">
+                    <EditIcon />
+                    <span />
+                    <span style={{marginLeft: 1 + 'em'}} className="menu-text">Try Out</span>
+                    <i className="menu-arrow"/>
+                  </NavLink>
+                  <div className="menu-submenu ">
+                    <i className="menu-arrow"/>
+                    <ul className="menu-subnav">
+                      {/*begin::3 Level*/}
+                      <li
+                          className={`menu-item  ${getMenuItemActive(
+                              "/google-material/inputs/autocomplete"
+                          )}`}
+                          aria-haspopup="true"
+                      >
+                        <NavLink className="menu-link" to="/dashboard">
+                          <span style={{margin: 'auto'}}>
+                            <ScheduleIcon />
+                          </span>
+                          <span style={{marginLeft: 1 + 'em'}} className="menu-text">Pilih Jadwal</span>
+                        </NavLink>
+                      </li> 
+                    </ul>
+                  </div>
+                  <div className="menu-submenu ">
+                    <i className="menu-arrow"/>
+                    <ul className="menu-subnav">
+                      {/*begin::3 Level*/}
+                      <li
+                          className={`menu-item  ${getMenuItemActive(
+                              "/google-material/inputs/autocomplete"
+                          )}`}
+                          aria-haspopup="true"
+                      >
+                        <NavLink className="menu-link" to="/tryout/history">
+                          <span style={{margin: 'auto'}}>
+                            <EventNoteIcon />
+                          </span>
+                          <span style={{marginLeft: 1 + 'em'}} className="menu-text">History Pendaftaran</span>
+                        </NavLink>
+                      </li> 
+                    </ul>
+                  </div>
+                  
+                </li>
+                
+                      {/*end::3 Level*/}
+                    
           {/*end::1 Level*/}
 
           {/* begin::1 Level*/}

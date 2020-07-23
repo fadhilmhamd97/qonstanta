@@ -2,7 +2,7 @@
     "name": "qonstanta",
     "version": "7.0.6",
     "private": true,
-    "homepage": "./",
+    "homepage": "https://app.qonstanta.com",
     "scripts": {
         "start": "react-scripts start -o",
         "build": "react-scripts build",

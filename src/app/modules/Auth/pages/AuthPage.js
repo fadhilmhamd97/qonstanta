@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from "react";
+import React,{useEffect, useState} from "react";
 import {Link, Switch, Redirect} from "react-router-dom";
 import {toAbsoluteUrl} from "../../../../_metronic/_helpers";
 import {ContentRoute} from "../../../../_metronic/layout"
@@ -8,7 +8,13 @@ import Registration from "./Registration";
 import ForgotPassword from "./ForgotPassword";
 import "../../../../_metronic/_assets/sass/pages/login/classic/login-1.scss";
 
-export function AuthPage() {  
+export function AuthPage() {
+
+  const [propAccountState, setAccountState] = useState(undefined)
+
+  useEffect(() => {
+    setAccountState(window.location.href)
+  },[window.location.href])
 
   const RedirectButton = () => {
     if(window.location.href.split('/')[window.location.href.split('/').length - 1] === 'registration'){

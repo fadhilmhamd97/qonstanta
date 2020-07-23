@@ -4,8 +4,9 @@ import { useSelector } from "react-redux";
 import SVG from "react-inlinesvg";
 import { useHistory } from "react-router-dom";
 import {toAbsoluteUrl} from "../../../../_helpers";
+import { Link } from "react-router-dom";
 
-export function QuickUser() {
+export function QuickUser({title}) {
   const history = useHistory();
 
   const logoutClick = () => {
@@ -16,14 +17,16 @@ export function QuickUser() {
       history.push("/logout");
   };
 
-  //redux hooks for getter ctx
-  const {user} = useSelector(state => state.auth)
+  const navigateChangePassword = () => {
+    //Navigate to change password
+    return(<Link to="/xnxx"></Link>)
+  }
 
-  const [propsUser, setUser] = useState('');
+  //redux hooks for getter ctx
+
 
   useEffect(() => {
     //read local storage for user email
-    setUser(user)
   },[])
 
 
@@ -62,7 +65,7 @@ export function QuickUser() {
                   href="#"
                   className="font-weight-bold font-size-h5 text-dark-75 text-hover-primary"
               >
-                {propsUser}
+                {title}
               </a>
               <div className="text-muted mt-1"></div>
               <div className="navi mt-2">
@@ -70,12 +73,12 @@ export function QuickUser() {
                 <span className="navi-link p-0 pb-2">
                   <span className="navi-icon mr-1">
                     <span className="svg-icon-lg svg-icon-primary">
-                      <SVG
+                      {/* <SVG
                           src={toAbsoluteUrl(
                               "/media/svg/icons/Communication/Mail-notification.svg"
                           )}
-                      ></SVG>
-                      {}
+                      ></SVG> */}
+                      
                     </span>
                   </span>
                   <span className="navi-text text-muted text-hover-primary">
@@ -88,6 +91,9 @@ export function QuickUser() {
                 Sign Out
               </Link> */}
               <button className="btn btn-light-primary btn-bold" onClick={logoutClick}>Sign out</button>
+              <Link style={{marginTop: 12 + 'px'}} to="/profile/change-password" className="btn btn-light-primary btn-bold">
+                 Ganti Password
+              </Link>
             </div>
           </div>
 
