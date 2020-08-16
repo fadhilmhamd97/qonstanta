@@ -38,9 +38,6 @@ export function Aside() {
                     <h3>Qonstanta</h3>
                   </Link>
                 </div>
-                <h2>  
-                    Qonstanta
-                  </h2>
                 {/* end::Header Logo */}
               </>
             )}

@@ -52,7 +52,7 @@ export function MixedWidget1({ className }) {
   return (
     <div className={`card card-custom bg-gray-100 ${className}`}>
       {/* Header */}
-      <div className="card-header border-0 bg-danger py-5">
+      <div className="card-header border-0 bg-primary py-5">
         <h3 className="card-title font-weight-bolder text-white">Pilih Jadwal</h3>
       </div>
       {/* Body */}

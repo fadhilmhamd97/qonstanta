@@ -1,5 +1,6 @@
-import React, {useMemo} from "react";
+import React, {useMemo, useEffect} from "react";
 import {AsideMenuList} from "./AsideMenuList";
+import { useSelector } from "react-redux";
 import {useHtmlClassService} from "../../../_core/MetronicLayout";
 
 export function AsideMenu({disableScroll}) {
@@ -13,6 +14,10 @@ export function AsideMenu({disableScroll}) {
     };
   }, [uiService]);
 
+  const {roleConfig} = useSelector(state => state.auth)
+
+  useEffect(() => console.info(roleConfig))
+
   return (
     <>
       {/* begin::Menu Container */}
@@ -22,7 +27,7 @@ export function AsideMenu({disableScroll}) {
         className={`aside-menu my-4 ${layoutProps.asideClassesFromConfig}`}
         {...layoutProps.asideMenuAttr}
       >
-        <AsideMenuList layoutProps={layoutProps} />
+        <AsideMenuList navProps={roleConfig} layoutProps={layoutProps} />
       </div>
       {/* end::Menu Container */}
     </>

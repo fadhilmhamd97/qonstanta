@@ -1,14 +1,59 @@
 /* eslint-disable no-script-url,jsx-a11y/anchor-is-valid */
-import React from "react";
+import React,{useEffect} from "react";
 import {useLocation} from "react-router";
 import {NavLink}  from "react-router-dom";
-import SVG from "react-inlinesvg";
-import {toAbsoluteUrl, checkIsActive} from "../../../../_helpers";
-import EditIcon from '@material-ui/icons/Edit';
-import ScheduleIcon from '@material-ui/icons/Schedule';
-import EventNoteIcon from '@material-ui/icons/EventNote';
+import {checkIsActive} from "../../../../_helpers";
 
-export function AsideMenuList({ layoutProps }) {
+import 
+{
+  EventNoteIcon, 
+  DashboardIcon, 
+  ScheduleIcon, 
+  HistoryIcon,
+  BorderColorIcon,
+  BookIcon,
+  NoteIcon,
+  VideoLibraryIcon,
+  CreateIcon,
+  LiveTvIcon,
+  PeopleIcon,
+  GroupAddIcon,
+  AttachMoneyIcon,
+} from "./AsideIcons"
+
+/* DUMB WAY */
+const importIconByStatement = icon => {
+  console.info(icon)
+  switch(icon){
+    case 'note':
+      return(<EventNoteIcon />)
+    case 'dashboard':
+      return(<DashboardIcon />)
+    case 'schedule':
+      return(<ScheduleIcon />)
+    case 'history':
+      return(<HistoryIcon />)
+    case 'exam':
+      return(<BorderColorIcon />)
+    case 'book':
+      return(<BookIcon />)
+    case 'paper':
+      return(<NoteIcon />)
+    case 'videos':
+      return(<VideoLibraryIcon />)
+    case 'live':
+      return(<LiveTvIcon />)
+    case 'users':
+      return(<PeopleIcon />)
+    case 'groups':
+      return(<GroupAddIcon />)
+    default:
+      return(<AttachMoneyIcon />)
+  }
+}
+
+//These are some stupid way
+export function AsideMenuList({ layoutProps, navProps, user, propList}) {
   const location = useLocation();
   const getMenuItemActive = (url, hasSubmenu = false) => {
     return checkIsActive(location, url)
@@ -20,61 +65,55 @@ export function AsideMenuList({ layoutProps }) {
       <>
         {/* begin::Menu Nav */}
         <ul className={`menu-nav ${layoutProps.ulClasses}`}>
-
-                {/*begin::2 Level*/}
-                <li
-                    className={`menu-item menu-item-submenu ${getMenuItemActive(
-                        "/google-material/inputs", true
-                    )}`}
-                    aria-haspopup="true"
-                    data-menu-toggle="hover"
-                >
-                  <NavLink className="menu-link menu-toggle" to="/google-material/inputs">
-                    <EditIcon />
+            {navProps.map((v, i) => {
+              //check whether role has childs or not
+              if(v['childs'].length > 0){
+                return(<li key={i} className={`menu-item menu-item-submenu ${getMenuItemActive(
+                  `${v['route']}`, true
+              )}`}
+              aria-haspopup="true"
+              data-menu-toggle="hover"
+              >
+                <NavLink className="menu-link menu-toggle" to={v['route']}>
+                    {importIconByStatement(v['icon'])}
                     <span />
-                    <span style={{marginLeft: 1 + 'em'}} className="menu-text">Try Out</span>
+                      <span style={{marginLeft: 1 + 'em'}} className="menu-text">{v['description']}</span>
                     <i className="menu-arrow"/>
                   </NavLink>
-                  <div className="menu-submenu ">
+                  {v['childs'].map((v1, i1) => {
+                    return(<div key={i1} className="menu-submenu ">
                     <i className="menu-arrow"/>
                     <ul className="menu-subnav">
                       {/*begin::3 Level*/}
                       <li
                           className={`menu-item  ${getMenuItemActive(
-                              "/google-material/inputs/autocomplete"
+                              `${v1['route']}`
                           )}`}
                           aria-haspopup="true"
                       >
-                        <NavLink className="menu-link" to="/dashboard">
+                        <NavLink className="menu-link" to={v1['route']}>
                           <span style={{margin: 'auto'}}>
-                            <ScheduleIcon />
+                            {importIconByStatement(v1['icon'])}
                           </span>
-                          <span style={{marginLeft: 1 + 'em'}} className="menu-text">Pilih Jadwal</span>
+                          <span style={{marginLeft: 1 + 'em'}} className="menu-text">{v1['description']}</span>
                         </NavLink>
                       </li> 
                     </ul>
-                  </div>
-                  <div className="menu-submenu ">
-                    <i className="menu-arrow"/>
-                    <ul className="menu-subnav">
-                      {/*begin::3 Level*/}
-                      <li
-                          className={`menu-item  ${getMenuItemActive(
-                              "/google-material/inputs/autocomplete"
-                          )}`}
-                          aria-haspopup="true"
-                      >
-                        <NavLink className="menu-link" to="/tryout/history">
-                          <span style={{margin: 'auto'}}>
-                            <EventNoteIcon />
-                          </span>
-                          <span style={{marginLeft: 1 + 'em'}} className="menu-text">History Pendaftaran</span>
-                        </NavLink>
-                      </li> 
-                    </ul>
-                  </div>
-                  
-                </li>
+                  </div>)
+                  })}
+                </li>)
+              }
+              else
+                return(<li
+                  className={`menu-item ${getMenuItemActive(`${v['route']}`, true)}`}
+                  aria-haspopup="true"
+              >
+                <NavLink className="menu-link" to={v['route']}>
+                  {importIconByStatement(v['icon'])}
+                  <span style={{marginLeft: 1 + 'em'}} className="menu-text">{v['description']}</span>
+                </NavLink>
+              </li>)
+            })} {/*end::1 Level
                 
                       {/*end::3 Level*/}
                     

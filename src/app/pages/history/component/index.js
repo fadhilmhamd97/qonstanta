@@ -1,3 +1,3 @@
-import HistoryCardComponent from "./HistoryCard";
+import ListCard from "./ListCard";
 
-export {HistoryCardComponent}
+export {ListCard}

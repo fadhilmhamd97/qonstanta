@@ -7,7 +7,7 @@ export function StickyToolbar() {
   return (
     <>
       <ul>
-        {/* <OverlayTrigger
+        <OverlayTrigger
           placement="left"
           overlay={<Tooltip id="layout-tooltip">Layout Builder</Tooltip>}
         >
@@ -35,7 +35,7 @@ export function StickyToolbar() {
               <i className="flaticon2-telegram-logo"></i>
             </a>
           </li>
-        </OverlayTrigger> */}
+        </OverlayTrigger>
       </ul>
     </>
   );

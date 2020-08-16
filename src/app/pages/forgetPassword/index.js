@@ -11,7 +11,7 @@ const ForgetPassword = ({props}) => {
     const [propEmail, setEmail] = useState('')
 
     useEffect(() => {
-        setEmail(localStorage.getItem('userProps'))
+        setEmail(localStorage.getItem('user'))
     },[])
 
     const submitPassword = ev => {
@@ -35,11 +35,6 @@ const ForgetPassword = ({props}) => {
             <Header>Ubah Password</Header>
             <Body>
             <Form>
-                <Group controlId="formBasicEmail">
-                    <Label>Alamat Email</Label>
-                    <Control disabled value={propEmail} type="email" placeholder="Enter email" />
-                </Group>
-
                 <Group controlId="formBasicPassword">
                     <Label>Password baru kamu</Label>
                     <Control onChange={ev => setPassword(ev.target.value)} type="password" placeholder="Password" />

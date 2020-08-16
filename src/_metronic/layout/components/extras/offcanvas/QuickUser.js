@@ -5,8 +5,10 @@ import SVG from "react-inlinesvg";
 import { useHistory } from "react-router-dom";
 import {toAbsoluteUrl} from "../../../../_helpers";
 import { Link } from "react-router-dom";
+import { useSelect } from "downshift";
+import { Row, Col } from "react-bootstrap";
 
-export function QuickUser({title}) {
+export function QuickUser(props) {
   const history = useHistory();
 
   const logoutClick = () => {
@@ -14,19 +16,18 @@ export function QuickUser({title}) {
       if (toggle) {
         toggle.click();
       }
+      localStorage.clear();   
       history.push("/logout");
   };
 
-  const navigateChangePassword = () => {
-    //Navigate to change password
-    return(<Link to="/xnxx"></Link>)
-  }
-
-  //redux hooks for getter ctx
-
+  //state
+  const [propsUser, setUser] = useState({})
 
   useEffect(() => {
     //read local storage for user email
+    const {user_fullName, user_email, profile_phoneNumber} = JSON.parse(localStorage.getItem('user'))
+    console.info(localStorage.getItem('user'))
+    setUser({user_fullName, user_email, profile_phoneNumber})
   },[])
 
 
@@ -55,7 +56,7 @@ export function QuickUser({title}) {
             >
               <div className="symbol-label" style={{
                 backgroundImage: `url(${toAbsoluteUrl(
-                    "/media/users/300_21.jpg"
+                    "/media/users/default.jpg"
                 )})`
               }}/>
               <i className="symbol-badge bg-success"/>
@@ -65,7 +66,7 @@ export function QuickUser({title}) {
                   href="#"
                   className="font-weight-bold font-size-h5 text-dark-75 text-hover-primary"
               >
-                {title}
+                {}
               </a>
               <div className="text-muted mt-1"></div>
               <div className="navi mt-2">
@@ -73,16 +74,54 @@ export function QuickUser({title}) {
                 <span className="navi-link p-0 pb-2">
                   <span className="navi-icon mr-1">
                     <span className="svg-icon-lg svg-icon-primary">
-                      {/* <SVG
+                      <SVG
                           src={toAbsoluteUrl(
-                              "/media/svg/icons/Communication/Mail-notification.svg"
+                              "/media/svg/icons/General/User.svg"
                           )}
-                      ></SVG> */}
+                      ></SVG>
                       
                     </span>
                   </span>
                   <span className="navi-text text-muted text-hover-primary">
-                            
+                      {propsUser.user_fullName}      
+                  </span>
+                </span>
+                </a>
+              </div>
+              <div className="navi mt-2">
+                <a href="#" className="navi-item">
+                <span className="navi-link p-0 pb-2">
+                  <span className="navi-icon mr-1">
+                    <span className="svg-icon-lg svg-icon-primary">
+                      <SVG
+                          src={toAbsoluteUrl(
+                              "/media/svg/icons/Communication/Mail-notification.svg"
+                          )}
+                      ></SVG>
+                      
+                    </span>
+                  </span>
+                  <span className="navi-text text-muted text-hover-primary">
+                      {propsUser.user_email}
+                  </span>
+                </span>
+                </a>
+              </div>
+              <div className="navi mt-2">
+                <a href="#" className="navi-item">
+                <span className="navi-link p-0 pb-2">
+                  <span className="navi-icon mr-1">
+                    <span className="svg-icon-lg svg-icon-primary">
+                      <SVG
+                          src={toAbsoluteUrl(
+                              "/media/svg/icons/Communication/Incoming-call.svg"
+                          )}
+                      ></SVG>
+                      
+                    </span>
+                  </span>
+                  <span className="navi-text text-muted text-hover-primary">
+                      {propsUser.profile_phoneNumber}
                   </span>
                 </span>
                 </a>
@@ -90,12 +129,21 @@ export function QuickUser({title}) {
               {/* <Link to="/logout" className="btn btn-light-primary btn-bold">
                 Sign Out
               </Link> */}
-              <button className="btn btn-light-primary btn-bold" onClick={logoutClick}>Sign out</button>
-              <Link style={{marginTop: 12 + 'px'}} to="/profile/change-password" className="btn btn-light-primary btn-bold">
-                 Ganti Password
-              </Link>
             </div>
           </div>
+          <br />
+          <Row>
+                <Col xs={12} md={12} style={{textAlign:'center'}}>
+                  <Link style={{width: 200 + 'px'}} to="/profile/change-password" className="btn btn-light-primary btn-bold">
+                    Ganti Password
+                  </Link>
+                </Col>
+                <br />
+                <br />
+                <Col xs={12} md={12} style={{textAlign: 'center'}}>
+                  <button style={{width: 200 + 'px', marginTop: 1 +'em'}} className="btn btn-light-primary btn-bold" onClick={logoutClick}>Sign out</button>
+                </Col>
+          </Row>
 
           {/* <div className="separator separator-dashed mt-8 mb-5"/>
 

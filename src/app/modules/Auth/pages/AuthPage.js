@@ -42,29 +42,33 @@ export function AuthPage() {
             <div
                 className="login-aside d-flex flex-row-auto bgi-size-cover bgi-no-repeat p-10 p-lg-10"
                 style={{
-                  backgroundImage: `url(${toAbsoluteUrl("/media/bg/bg-4.jpg")})`
+                  backgroundImage: `url(${toAbsoluteUrl("/media/bg/newsletter.jpg")})`
                 }}
             >
               {/*begin: Aside Container*/}
               <div className="d-flex flex-row-fluid flex-column justify-content-between">
                 {/* start:: Aside header */}
-                <Link to="/" className="flex-column-auto mt-5">
+                {/* <Link to="/" className="flex-column-auto mt-5">
                   <img
                       alt="Logo"
                       className="max-h-70px"
                       src={toAbsoluteUrl("/media/logos/qonstanta-04.png")}
                   />
-                </Link>
+                </Link> */}
                 {/* end:: Aside header */}
 
                 {/* start:: Aside content */}
                 <div className="flex-column-fluid d-flex flex-column justify-content-center">
-                  <h3 className="font-size-h1 mb-5 text-white">
+                  {/* <h3 className="font-size-h1 mb-5 text-white">
                     Qonstanta
-                  </h3>
-                  <p className="font-weight-lighter text-white opacity-80">
-                    Qonstanta adalah aplikasi untuk belajar bimbel
-                  </p>
+                  </h3> */}
+                  <Link to="/" className="flex-column-auto mt-5">
+                  <img
+                      alt="Logo"
+                      className="max-h-70px"
+                      src={toAbsoluteUrl("/media/logos/Qonstanta-footer-07.svg")}
+                  />
+                </Link>
                 </div>
                 {/* end:: Aside content */}
 
@@ -74,15 +78,9 @@ export function AuthPage() {
                     &copy; 2020 RTI
                   </div>
                   <div className="d-flex">
-                    <Link to="/terms" className="text-white">
-                      Privacy
-                    </Link>
-                    <Link to="/terms" className="text-white ml-10">
-                      Legal
-                    </Link>
-                    <Link to="/terms" className="text-white ml-10">
-                      Contact
-                    </Link>
+                    <a href="https://qonstanta.com" className="text-white">
+                      About Us
+                    </a>
                   </div>
                 </div>
                 {/* end:: Aside footer for desktop */}

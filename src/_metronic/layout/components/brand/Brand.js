@@ -29,8 +29,8 @@ export function Brand() {
       >
         {/* begin::Logo */}
         <Link to="" className="brand-logo">
-          {/* <img alt="logo" src={layoutProps.headerLogo}/> */}
-          <h3>Qonstanta</h3>
+          <img alt="logo" style={{width: 170 + 'px'}} src={toAbsoluteUrl("/media/logos/Qonstanta-footer-07.svg")} />
+          {/* <h3>Qonstanta</h3> */}
         </Link>
         {/* end::Logo */}
 

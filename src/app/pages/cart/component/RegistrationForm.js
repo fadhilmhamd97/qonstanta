@@ -18,6 +18,7 @@ import {
     Container,
     Row
   } from "react-bootstrap";
+  import ScheduleDetailComponent from "./ScheduleDetail";
 
 //services
 import { getCity, getProvince } from "../../../modules/Common/_redux/provinceCrud";
@@ -132,7 +133,7 @@ const RegistrationForm = ({title, props, packet, packetDescription}) => {
     const JadwalComponent = ({detail, show}) => {
         return(<Modal
             
-            size="lg"
+            size="md"
             aria-labelledby="contained-modal-title-vcenter"
             centered
             show={show}
@@ -142,17 +143,8 @@ const RegistrationForm = ({title, props, packet, packetDescription}) => {
                 {title}
               </Modal.Title>
             </Modal.Header>
-            <Modal.Body>
-                <h2>Jadwal Try Out</h2>
-                <hr />
-                <ul>
-                    {detail.map((v,i)=> {
-                        return(
-                        <>
-                            <li>{`Mata Pelajaran: ${v.name} || Jadwal: ${v.datetimeStart}`}</li>
-                        </>)
-                    })}
-                </ul>
+            <Modal.Body style={{margin: 'auto'}}>
+                <ScheduleDetailComponent datasets={detail} />
             </Modal.Body>
             <Modal.Footer>
               <Button onClick={() => setDetailShow(false)}>Close</Button>
@@ -189,7 +181,7 @@ const RegistrationForm = ({title, props, packet, packetDescription}) => {
             </Select>
         </FormControl>
         <Grid container>
-            <Grid item xs={6}>
+            <Grid item xs={12} md={6}>
                 <FormControl style={{width: 80 + '%'}} variant="outlined" className={classes.formControl}>
                     <InputLabel htmlFor="outlined-age-simple">
                         Provinsi
@@ -207,8 +199,8 @@ const RegistrationForm = ({title, props, packet, packetDescription}) => {
                     </Select>
                 </FormControl>
             </Grid>
-            <Grid item xs={6}>
-                <FormControl variant="outlined" style={{width: 80 + '%', float: 'right'}} className={classes.formControl}>
+            <Grid item xs={12} md={6}>
+                <FormControl variant="outlined" style={{width: 80 + '%'}} className={classes.formControl}>
                     <InputLabel htmlFor="outlined-age-simple">
                         Kabupaten
                     </InputLabel>
