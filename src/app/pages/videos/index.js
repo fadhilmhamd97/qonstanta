@@ -108,10 +108,9 @@ const Video = props => {
     const [propVideoUrl, setVideoUrl] = useState("")
     const [propMaskPlayer, setMaskPlayer] = useState(false)
 
-    const applyToPlayerContext = url => {
-        console.info(url)
-        if(url !== undefined){
-            setVideoUrl(url);
+    const applyToPlayerContext = cb => {
+        if(cb.url !== undefined){
+            setVideoUrl(cb.url);
             setMaskPlayer(true)
             return;
         }

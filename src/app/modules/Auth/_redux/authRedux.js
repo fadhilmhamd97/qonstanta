@@ -45,7 +45,7 @@ export const reducer = persistReducer(
             {id: 15, description: 'Jadwal Tryout', icon: 'schedule', route: 'master/tryout/schedule', childs: []},
             {id: 16, description: 'Riwayat Tryout', icon: 'history', route: 'master/tryout/history', childs: []}
           ]},
-          {id: 17, description: 'Pembelajaran', icon: 'book', route: '/master/learn', childs: [
+          {id: 17, description: 'Pembelajaran', icon: 'book', route: '/learn', childs: [
             {id: 18, description: 'Master Ebook', icon: 'paper', route: '/admin/ebook', childs: []},
             {id: 19, description: 'Master Video',  icon: 'videos', route: '/admin/videos', childs: []},
             {id: 20, description: 'Master Soal', icon: 'exam', route: '/admin/question', childs: []}

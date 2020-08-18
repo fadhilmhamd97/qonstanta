@@ -115,7 +115,7 @@ const useStyles2 = makeStyles(theme => ({
   },
 }));
 
-const MaterialTable = ({columns, datasets, actions, handleViewAction, handleEditAction, handleDeleteAction}) => {
+const MaterialTable = ({columns, datasets, actions = [], handleViewAction, handleEditAction, handleDeleteAction}) => {
   const classes = useStyles2();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -130,33 +130,18 @@ const MaterialTable = ({columns, datasets, actions, handleViewAction, handleEdit
       setRowsPerPage(parseInt(event.target.value, 10))
   }
 
-  const ButtonActions = ([actions]) => {
-
-    const {view, edit, del} = actions
-
-    const View = (view) => {
-        return view ? (<Button variant="contained">Default</Button>) : (<></>)
-    }
-
-    const Edit = (edit) => {
-        return edit ? (<Button variant="primary"></Button>) : (<></>)
-    }
-
-    const Del = (del) => {
-        return del ? (<Button variant="contained" color="primary"></Button>) : (<></>)
-    }
-    
+  const ButtonActions = ({actions}) => {
     return(<>
-        <View view={view} />
-        <Edit edit={edit} />
-        <Del del={del} />
+        {actions.map(v => {
+          if(v === 'edit') return(<Button variant="primary">Edit</Button>)
+          if(v === 'view') return(<Button variant="contained">View</Button>)
+          if(v === 'delete') return(<Button variant="danger">Delete</Button>)
+        })}
     </>)
 
   }
 
   return (
-    <Paper className={classes.root}>
-      <div className={classes.tableWrapper}>
         <Table className={classes.table}>
           <TableHead>
               <TableRow>
@@ -170,9 +155,11 @@ const MaterialTable = ({columns, datasets, actions, handleViewAction, handleEdit
             {datasets.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((v, i) => (
               <TableRow key={i}>
                 {columns.map((v1, i1) => {
-                    return(<TableCell key={`${i}.${i1}`}>{v[v1]}</TableCell>)
+                    return(<TableCell key={`${i}.${i1}`}>{v[v1['value']]}</TableCell>)
                 })}
-                <TableCell key={`action-${i}`}><ButtonActions actions={actions} /></TableCell>
+                <TableCell key={`action-${i}`}>
+                  {actions.length > 0 ? <ButtonActions actions={actions} /> : <></>}
+                </TableCell>
               </TableRow>
             ))}
 
@@ -201,8 +188,6 @@ const MaterialTable = ({columns, datasets, actions, handleViewAction, handleEdit
             </TableRow>
           </TableFooter>
         </Table>
-      </div>
-    </Paper>
   );
 }
 

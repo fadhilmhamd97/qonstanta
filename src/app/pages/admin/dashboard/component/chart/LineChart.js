@@ -1,20 +1,20 @@
 import React from "react"
 
 import { Card } from "react-bootstrap"
-import { Pie } from "react-chartjs-2";
+import { Line } from "react-chartjs-2"
 
-const PieByPackageComponent = ({dataset}) => {
+const LineChartComponent = ({dataset, title}) => {
     const {Body, Header} = Card
     return(<>
         <Card>
             <Header>
-                Siswa Berdasarkan Paket
+                {title}
             </Header>
             <Body>
-                <Pie data={dataset} />
+                <Line data={dataset} />
             </Body>
         </Card>
     </>)
 }
 
-export default PieByPackageComponent
+export default LineChartComponent

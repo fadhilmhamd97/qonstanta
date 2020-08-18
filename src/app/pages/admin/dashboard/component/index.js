@@ -1,7 +1,9 @@
 import InfoCardComponent from "./InfoCards"
-import PieByPackageComponent from "./chart/PieByPackage";
+import PieChartComponent from "./chart/PieChart"
+import LineChartComponent from "./chart/LineChart";
 
 export {
     InfoCardComponent,
-    PieByPackageComponent
+    PieChartComponent,
+    LineChartComponent
 }

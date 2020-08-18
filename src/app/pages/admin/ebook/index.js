@@ -2,15 +2,15 @@ import React,{useState} from "react"
 import { Card, Button } from "react-bootstrap"
 import { TreeFolderContent } from "../../../shared/common/index"
 import { TreeMapperService } from "../../../shared/helper/index"
-import { treeControls, columnsData, videosData } from "./_data"
+import { treeControls, columnsData, ebookData } from "./_data"
 
 import AddIcon from '@material-ui/icons/Add'
 import CreateIcon from '@material-ui/icons/Create'
 import DeleteIcon from '@material-ui/icons/Delete'
 
-import { VideoTableContainerComponent } from "./component/index";
+import { EbookTableContainerComponent } from "./component/index";
 
-const AdminVideoPage = ({props}) => {
+const AdminEbookPage = ({props}) => {
 
     const resultView = TreeMapperService.EntityDissolver(treeControls)
 
@@ -63,7 +63,7 @@ const AdminVideoPage = ({props}) => {
                         </div>
                     </div>
                     <div className="col-md-9">
-                        <VideoTableContainerComponent columns={columnsData} datasets={videosData} title="Daftar Pembelajaran Video" />
+                        <EbookTableContainerComponent columns={columnsData} datasets={ebookData} title="Daftar Pembelajaran Ebook" />
                     </div>
                 </div>
             </Body>
@@ -71,4 +71,4 @@ const AdminVideoPage = ({props}) => {
     </>)
 }
 
-export default AdminVideoPage
+export default AdminEbookPage
