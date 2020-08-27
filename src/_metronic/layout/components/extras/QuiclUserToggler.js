@@ -15,7 +15,7 @@ export function QuickUserToggler() {
     };
   }, [uiService]);
 
-  const {user_email, user_fullName} = useSelector(state => state.auth.authToken.userProps)
+  const {email, fullName} = useSelector(state => state.auth.authToken.userProps)
 
   return (<>
         {layoutProps.offcanvas && (<OverlayTrigger
@@ -29,7 +29,7 @@ export function QuickUserToggler() {
 
                 <span className="text-muted font-weight-bold font-size-base d-none d-md-inline mr-1">Hi, </span>
                 <span className="text-dark-50 font-weight-bolder font-size-base d-none d-md-inline mr-3">
-                  {user_fullName}   
+                  {fullName}   
                 </span>
               </>
             </div>

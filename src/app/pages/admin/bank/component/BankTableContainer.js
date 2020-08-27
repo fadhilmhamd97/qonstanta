@@ -2,7 +2,7 @@ import React from "react"
 import { MaterialTable } from "../../../../shared/common/index"
 import { Card, Button } from "react-bootstrap"
 
-const BankTableContainerComponent = ({columns, datasets, title}) => {
+const BankTableContainerComponent = ({columns, datasets, title, delegateAddEvent}) => {
     const {Title, Body, Header} = Card
 
     const actions = ['add','edit','delete']
@@ -15,7 +15,7 @@ const BankTableContainerComponent = ({columns, datasets, title}) => {
                         <Title>{title}</Title>
                     </div>
                     <div className="col-md-6">
-                        <Button variant='success' style={{float: 'right'}}>
+                        <Button variant='success' style={{float: 'right'}} onClick={delegateAddEvent}>
                             Tambah Soal
                         </Button>
                     </div>

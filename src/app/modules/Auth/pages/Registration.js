@@ -7,7 +7,8 @@ import { FormattedMessage, injectIntl } from "react-intl";
 import * as auth from "../_redux/authRedux";
 import { register } from "../_redux/authCrud";
 import SweetAlert from "react-bootstrap-sweetalert";
-import { Redirect } from "react-router-dom";
+import DatePicker from "react-datepicker"
+import "react-datepicker/dist/react-datepicker.css"
 
 const initialValues = {
   fullName: "",
@@ -15,6 +16,9 @@ const initialValues = {
   email: "",
   password: "",
   phoneNumber: undefined,
+  birthDate: undefined,
+  birthPlace: "",
+  schoolOrigin: "",
   changepassword: "",
   acceptTerms: false,
 };
@@ -62,6 +66,24 @@ function Registration(props) {
           id: "AUTH.VALIDATION.REQUIRED_FIELD",
         })
       ),
+    birthDate: Yup.date()
+        .required(
+          intl.formatMessage({
+            id: "AUTH.VALIDATION.REQUIRED_FIELD"
+          })
+        ),
+    birthPlace: Yup.string()
+        .required(
+          intl.formatMessage({
+            id: "AUTH.VALIDATION.REQUIRED_FIELD"
+          })
+        ),
+    schoolOrigin: Yup.string()
+          .required(
+            intl.formatMessage({
+              id: "AUTH.VALIDATION.REQUIRED_FIELD"
+            })
+          ),
     changepassword: Yup.string()
       .required(
         intl.formatMessage({
@@ -110,8 +132,17 @@ function Registration(props) {
     initialValues,
     validationSchema: RegistrationSchema,
     onSubmit: (values, { setStatus, setSubmitting }) => {
-      enableLoading();  
-      register(values.email, values.fullName, values.nickName, values.phoneNumber, values.password)
+      enableLoading();
+      var _data = {
+        email: values.email,
+        fullName: values.fullName,
+        nickName: values.nickName,
+        phoneNumber: values.phoneNumber,
+        birthDate: values.birthDate,
+        birthPlace: values.birthPlace,
+        schoolOriginText: values.schoolOrigin
+      }
+      register(_data)
         .then(({ data: { accessToken } }) => {
           props.register(accessToken);
           setSuccessAlert(true);
@@ -155,6 +186,7 @@ function Registration(props) {
 
         {/* begin: Fullname */}
         <div className="form-group fv-plugins-icon-container">
+          <label class="control-label">Nama Lengkap</label>
           <input
             placeholder="Full name"
             type="text"
@@ -173,7 +205,8 @@ function Registration(props) {
         {/* end: Fullname */}
 
         {/* begin: Nickname */}
-                <div className="form-group fv-plugins-icon-container">
+        <div className="form-group fv-plugins-icon-container">
+          <label class="control-label">Nama Panggilan</label>
           <input
             placeholder="Nick name"
             type="text"
@@ -193,6 +226,7 @@ function Registration(props) {
 
         {/* begin: Email */}
         <div className="form-group fv-plugins-icon-container">
+          <label class="control-label">Email</label>
           <input
             placeholder="Email"
             type="email"
@@ -211,7 +245,8 @@ function Registration(props) {
         {/* end: Email */}
 
           {/* begin: Phone Number */}
-                <div className="form-group fv-plugins-icon-container">
+        <div className="form-group fv-plugins-icon-container">
+          <label class="control-label">No Handphone</label>
           <input
             placeholder="Phone Number"
             type="number"
@@ -229,8 +264,69 @@ function Registration(props) {
         </div>
         {/* end: Phone Number*/}
 
+        {/* begin: Birth Date */}
+        <div className="form-group fv-plugins-icon-container">
+          <div className="row">
+            <div className="col-md-6">
+              <label class="control-label">Tempat Lahir</label>
+              <input
+                placeholder="Tempat"
+                type="text"
+                className={`form-control form-control-solid h-auto py-5 px-6 ${getInputClasses(
+                  "birthPlace"
+                )}`}
+                name="birthPlace"
+                {...formik.getFieldProps("birthPlace")}
+              />
+              {formik.touched.phoneNumber && formik.errors.birthPlace ? (
+                <div className="fv-plugins-message-container">
+                  <div className="fv-help-block">{formik.errors.birthPlace}</div>
+                </div>
+              ) : null}
+            </div>
+            <div className="col-md-6">
+              <label class="control-label">Tanggal Lahir</label>
+              <input
+                type="date"
+                className={`form-control form-control-solid h-auto py-5 px-6 ${getInputClasses(
+                  "birthDate"
+                )}`}
+                name="birthDate"
+                {...formik.getFieldProps("birthDate")}
+              />
+              {formik.touched.birthDate && formik.errors.birthDate ? (
+                <div className="fv-plugins-message-container">
+                  <div className="fv-help-block">{formik.errors.birthDate}</div>
+                </div>
+              ) : null}
+            </div>
+          </div>
+        </div>
+        {/* end: Birth Date*/}
+
+        {/* begin: Asal Sekolah */}
+        <div className="form-group fv-plugins-icon-container">
+        <label class="control-label">Asal Sekolah</label>
+          <input
+            placeholder="Asal Sekolah"
+            type="text"
+            className={`form-control form-control-solid h-auto py-5 px-6 ${getInputClasses(
+              "schoolOrigin"
+            )}`}
+            name="schoolOrigin"
+            {...formik.getFieldProps("schoolOrigin")}
+          />
+          {formik.touched.schoolOrigin && formik.errors.schoolOrigin ? (
+            <div className="fv-plugins-message-container">
+              <div className="fv-help-block">{formik.errors.schoolOrigin}</div>
+            </div>
+          ) : null}
+        </div>
+        {/* end: Asal Sekolah */}
+
         {/* begin: Password */}
         <div className="form-group fv-plugins-icon-container">
+        <label class="control-label">Password</label>
           <input
             placeholder="Password"
             type="password"
@@ -250,6 +346,7 @@ function Registration(props) {
 
         {/* begin: Confirm Password */}
         <div className="form-group fv-plugins-icon-container">
+          <label class="control-label">Ketik password ulang</label>
           <input
             placeholder="Confirm Password"
             type="password"

@@ -1,37 +1,31 @@
 import React,{useState} from "react"
-import { Card, Button } from "react-bootstrap"
-import { TreeFolderContent } from "../../../shared/common/index"
+import { Card } from "react-bootstrap"
+import { TreeFolderContent, BootstrapModalHelper } from "../../../shared/common/index"
 import { TreeMapperService } from "../../../shared/helper/index"
 import { treeControls, columnsData, bankData } from "./_data"
 
-import AddIcon from '@material-ui/icons/Add'
-import CreateIcon from '@material-ui/icons/Create'
-import DeleteIcon from '@material-ui/icons/Delete'
+import { TreeItemControlsSharedComponent, AddTreeModalSharedComponent, EditTreeModalSharedComponent } from "../shared/index"
 
-import { BankTableContainerComponent } from "./component/index";
+import { BankTableContainerComponent, BankQuestionPickerComponent } from "./component/index";
 
 const AdminBankPage = ({props}) => {
 
     const resultView = TreeMapperService.EntityDissolver(treeControls)
 
-    const [propFolderContext, setFolderContext] = useState(null);
+    const [propFolderContext, setFolderContext] = useState(null)
+
+    //Add Modal
+    const [propAddFolderModal, setAddFolderModal] = useState(false)
+    //Edit Modal
+    const [propEditFolderModal, setEditFolderModal] = useState(false)
+
+    //Modal Add Soal
+    const [propQuestionPickerModal, setQuestionPickerModal] = useState(false)
 
     const changeToContext = cb => {
         //1 As Root
         const _data = cb !== undefined ? cb['id'] : 1
         setFolderContext(_data)
-    }
-
-    const EditAction = () => {
-        //show Edit Modal
-    }
-
-    const AddAction = () => {
-        //show Add Modal
-    }
-
-    const DeleteAction = () => {
-        //show Delete Modal
     }
 
     const {Body, Header, Title} = Card
@@ -41,33 +35,39 @@ const AdminBankPage = ({props}) => {
                 <Title>Master Video</Title>
             </Header>
             <Body>
+                <h5>Controls</h5>
                 <div className="row">
                     <div className="col-md-3">
                         <div style={{overflowY: 'scroll'}}>
-                            {/* CONTROLS */}
-                            <div className="row">
-                                <div className="col-md-4" style={{textAlign: 'center', cursor: 'pointer'}}>
-                                    <AddIcon />
-                                    <p>Add</p>
-                                </div>
-                                <div className="col-md-4" style={{textAlign: 'center', cursor: 'pointer'}}>
-                                    <CreateIcon />
-                                    <p>Edit</p>
-                                </div>
-                                <div className="col-md-4" style={{textAlign: 'center', cursor: 'pointer'}}>
-                                    <DeleteIcon />
-                                    <p>Delete</p>
-                                </div>
+                            {/* CONTROLS: Set EventArgs and Listener to suspend the long syntax style */}
+                            <TreeItemControlsSharedComponent 
+                                    delegateAddEvent={() => setAddFolderModal(true)} 
+                                    delegateEditEvent={() => setEditFolderModal(true)} />
+                            <hr />
+                            <div style={{minHeight: '390px'}}>
+                                <TreeFolderContent propsNode={resultView} onChoose={changeToContext} />
                             </div>
-                            <TreeFolderContent propsNode={resultView} onChoose={changeToContext} />
                         </div>
                     </div>
                     <div className="col-md-9">
-                        <BankTableContainerComponent columns={columnsData} datasets={bankData} title="Daftar Bank Soal" />
+                        <BankTableContainerComponent delegateAddEvent={() => setQuestionPickerModal(true)} columns={columnsData} datasets={bankData} title="Daftar Bank Soal" />
                     </div>
                 </div>
             </Body>
         </Card>
+
+        {/* ADD Tree MODAL */}
+        <BootstrapModalHelper title="Tambah Folder Video" propsAction={propAddFolderModal} delegateHideEvent={() => setAddFolderModal(false)}>
+            <AddTreeModalSharedComponent />
+        </BootstrapModalHelper>
+
+        <BootstrapModalHelper title="Edit Folder Video" propsAction={propEditFolderModal} delegateHideEvent={() => setEditFolderModal(false)}>
+            <EditTreeModalSharedComponent propsParent={propFolderContext} />
+        </BootstrapModalHelper>
+
+        <BootstrapModalHelper size="lg" title="Tambah Soal" propsAction={propQuestionPickerModal} delegateHideEvent={() => setQuestionPickerModal(false)}>
+            <BankQuestionPickerComponent />
+        </BootstrapModalHelper>
     </>)
 }
 

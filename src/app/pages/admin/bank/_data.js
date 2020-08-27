@@ -90,4 +90,25 @@ const bankData = [
     },
 ]
 
-export {treeControls, columnsData, bankData}
+const postTestModuleColumns = [
+    {title: 'Id', value: 'postTestId'},
+    {title: 'Soal', value:'postTestQuestion'},
+    {title: 'Jawaban', value:'postTestAnswers'}
+]
+
+const postTestModuleData = [
+    {
+        postTestId: 1,
+        postTestQuestion: 'Dimanakah jawaban yang benar',
+        postTestAnswers: 'A. Budi Pergi Ke Pasar. B. Rima Pergi ke rumah Jaka...'
+    },
+    {
+        postTestId: 2,
+        postTestQuestion: 'Dimanakah jawaban yang Salah',
+        postTestAnswers: 'A. Budi Pergi Ke Sekolah. B. Rima Pergi ke rumah Siska...'
+    }
+]
+
+
+
+export {treeControls, columnsData, bankData, postTestModuleColumns, postTestModuleData}

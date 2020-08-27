@@ -1,11 +1,12 @@
 import React from "react"
 import { MaterialTable } from "../../../../shared/common/index"
 import { Card, Button } from "react-bootstrap"
+import { Link } from "react-router-dom"
 
 const VideoTableContainerComponent = ({columns, datasets, title}) => {
     const {Title, Body, Header} = Card
 
-    const actions = ['add','edit','delete']
+    const actions = ['edit','delete']
     
     return(<>
         <Card>
@@ -15,9 +16,11 @@ const VideoTableContainerComponent = ({columns, datasets, title}) => {
                         <Title>{title}</Title>
                     </div>
                     <div className="col-md-6">
-                        <Button variant='success' style={{float: 'right'}}>
-                            Tambah Video
-                        </Button>
+                        <Link to="/admin/videos/create?id=2">
+                            <Button variant='success' style={{float: 'right'}}>
+                                Tambah Video
+                            </Button>
+                        </Link>
                     </div>
                 </div>
             </Header>

@@ -2,7 +2,7 @@ import React from "react"
 import { MaterialTable } from "../../../../shared/common/index"
 import { Card, Button } from "react-bootstrap"
 
-const EbookTableContainerComponent = ({columns, datasets, title}) => {
+const EbookTableContainerComponent = ({columns, datasets, title, delegateAddEbookEvent}) => {
     const {Title, Body, Header} = Card
 
     const actions = ['add','edit','delete']
@@ -15,7 +15,7 @@ const EbookTableContainerComponent = ({columns, datasets, title}) => {
                         <Title>{title}</Title>
                     </div>
                     <div className="col-md-6">
-                        <Button variant='success' style={{float: 'right'}}>
+                        <Button variant='success' style={{float: 'right'}} onClick={delegateAddEbookEvent}>
                             Tambah Ebook
                         </Button>
                     </div>

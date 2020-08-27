@@ -16,6 +16,11 @@ import LastPageIcon from '@material-ui/icons/LastPage';
 import Button from '@material-ui/core/Button';
 import TableHead from '@material-ui/core/TableHead';
 
+import DeleteIcon from '@material-ui/icons/Delete';
+import CreateIcon from '@material-ui/icons/Create';
+import VisibilityIcon from '@material-ui/icons/Visibility';
+import AddIcon from '@material-ui/icons/Add';
+
 const useStyles1 = makeStyles(theme => ({
   root: {
     flexShrink: 0,
@@ -115,7 +120,7 @@ const useStyles2 = makeStyles(theme => ({
   },
 }));
 
-const MaterialTable = ({columns, datasets, actions = [], handleViewAction, handleEditAction, handleDeleteAction}) => {
+const MaterialTable = ({columns, datasets, actions = [], handleViewAction, withReturnId = false, handleEditAction, handleDeleteAction}) => {
   const classes = useStyles2();
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(5);
@@ -130,12 +135,38 @@ const MaterialTable = ({columns, datasets, actions = [], handleViewAction, handl
       setRowsPerPage(parseInt(event.target.value, 10))
   }
 
-  const ButtonActions = ({actions}) => {
+  const ButtonActions = ({actions, withReturnId, id = undefined}) => {
+
+    const style = {
+        margin: '2px'
+    }
+
+    const handleEditWithId = id => {
+      handleEditAction(id)
+    }
+
+    const handleViewWithId = id => {
+      handleViewAction(id)
+    }
+
+    const handleDeleteWithId = id => {
+      handleDeleteAction(id)
+    }
+
     return(<>
-        {actions.map(v => {
-          if(v === 'edit') return(<Button variant="primary">Edit</Button>)
-          if(v === 'view') return(<Button variant="contained">View</Button>)
-          if(v === 'delete') return(<Button variant="danger">Delete</Button>)
+      {withReturnId ?
+        actions.map(v => {
+          if(v === 'edit') return(<Button size="small" onClick={() => handleEditWithId(id)} variant="contained" style={style} color="primary" startIcon={<CreateIcon />}>Edit</Button>)
+          if(v === 'view') return(<Button size="small" onClick={() => handleViewWithId(id)} variant="contained" style={style} startIcon={<VisibilityIcon />}>View</Button>)
+          if(v === 'delete') return(<Button size="small" onClick={() => handleDeleteWithId(id)} variant="contained" color="secondary" style={style} startIcon={<DeleteIcon />}>Delete</Button>)
+          if(v === 'add') return(<Button size="small" variant="contained" color="primary" style={style} startIcon={<AddIcon />}>Add</Button>)
+        })
+        :
+        actions.map(v => {
+          if(v === 'edit') return(<Button size="small" onClick={handleEditAction} variant="contained" style={style} color="primary" startIcon={<CreateIcon />}>Edit</Button>)
+          if(v === 'view') return(<Button size="small" onClick={handleViewAction} variant="contained" style={style} startIcon={<VisibilityIcon />}>View</Button>)
+          if(v === 'delete') return(<Button size="small" onClick={handleDeleteAction} variant="contained" color="secondary" style={style} startIcon={<DeleteIcon />}>Delete</Button>)
+          if(v === 'add') return(<Button size="small" variant="contained" color="primary" style={style} startIcon={<AddIcon />}>Add</Button>)
         })}
     </>)
 
@@ -148,24 +179,24 @@ const MaterialTable = ({columns, datasets, actions = [], handleViewAction, handl
                   {columns.map((v, i) => {
                       return(<TableCell key={i}>{v['title']}</TableCell>)
                   })}
-                  <TableCell></TableCell>
+                  {actions.length > 0 ? <TableCell>Actions</TableCell> : <></>}
               </TableRow>
           </TableHead>
           <TableBody>
-            {datasets.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((v, i) => (
+            {datasets.length > 0 ? datasets.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((v, i) => (
               <TableRow key={i}>
                 {columns.map((v1, i1) => {
                     return(<TableCell key={`${i}.${i1}`}>{v[v1['value']]}</TableCell>)
                 })}
                 <TableCell key={`action-${i}`}>
-                  {actions.length > 0 ? <ButtonActions actions={actions} /> : <></>}
+                  {actions.length > 0 ? <ButtonActions id={v['id']} actions={actions} withReturnId={withReturnId} /> : <></>}
                 </TableCell>
               </TableRow>
-            ))}
+            )) : <TableRow key={1}><TableCell style={{textAlign: 'center'}} colSpan={columns.length + 1} key={1}>No Data Available</TableCell></TableRow>}
 
             {emptyRows > 0 && (
               <TableRow style={{ height: 48 * emptyRows }}>
-                <TableCell colSpan={6} />
+                <TableCell colSpan={columns.length + 1} />
               </TableRow>
             )}
           </TableBody>
@@ -173,7 +204,7 @@ const MaterialTable = ({columns, datasets, actions = [], handleViewAction, handl
             <TableRow>
               <TablePagination
                 rowsPerPageOptions={[5, 10, 25]}
-                colSpan={3}
+                colSpan={columns.length + 1}
                 count={rows.length}
                 rowsPerPage={rowsPerPage}
                 page={page}

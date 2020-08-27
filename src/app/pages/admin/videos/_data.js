@@ -73,6 +73,34 @@ const columnsData = [
     }
 ]
 
+const columnsPostTest = [
+    {
+        title: 'No',
+        value: 'postTestNo'
+    },
+    {
+        title: 'Soal',
+        value: 'postTestQuestion'
+    },
+    {
+        title: 'Paket Soal',
+        value: 'postTestModule'
+    },
+]
+
+const postTestData = [
+    {
+        postTestNo: 1,
+        postTestQuestion: 'Berapa banyak ikan di laut',
+        postTestModule: 'Soal Tryout Kelas X'
+    },
+    {
+        postTestNo: 2,
+        postTestQuestion: 'Berapa banyak bintang di angkasa',
+        postTestModule: 'Soal Tryout Kelas XI'
+    },
+]
+
 const videosData = [
     {
         videosId: 1,
@@ -90,4 +118,23 @@ const videosData = [
     },
 ]
 
-export {treeControls, columnsData, videosData}
+const postTestModuleColumns = [
+    {title: 'Id', value: 'postTestId'},
+    {title: 'Soal', value:'postTestQuestion'},
+    {title: 'Jawaban', value:'postTestAnswers'}
+]
+
+const postTestModuleData = [
+    {
+        postTestId: 1,
+        postTestQuestion: 'Dimanakah jawaban yang benar',
+        postTestAnswers: 'A. Budi Pergi Ke Pasar. B. Rima Pergi ke rumah Jaka...'
+    },
+    {
+        postTestId: 2,
+        postTestQuestion: 'Dimanakah jawaban yang Salah',
+        postTestAnswers: 'A. Budi Pergi Ke Sekolah. B. Rima Pergi ke rumah Siska...'
+    }
+]
+
+export {treeControls, columnsData, videosData, columnsPostTest, postTestData, postTestModuleColumns, postTestModuleData}

@@ -1,8 +1,8 @@
 import axios from "axios";
 
-const _host = 'https://api.qonstanta.com/api/v1';
+const _host = 'http://apiapps.qonstanta.com/auth';
 
-export const LOGIN_URL = `${_host}/auth/signIn`;
+export const LOGIN_URL = `${_host}/auth/sign-in`;
 export const REGISTER_URL = `${_host}/auth/signUp`;
 export const REQUEST_PASSWORD_URL = "api/auth/forgot-password";
 
@@ -23,8 +23,8 @@ export function forgotPassword(email) {
   return axios.post(FORGOT_PASSWORD, {email});
 }
 
-export function register(email, fullName, nickName, phoneNumber, password) {
-  return axios.post(REGISTER_URL, { email, fullName, nickName, phoneNumber,password });
+export function register({email, fullName, nickName, phoneNumber, birthPlace, birthDate, schoolOriginText, password}) {
+  return axios.post(REGISTER_URL, { email, fullName, nickName, phoneNumber, birthDate, birthPlace, schoolOriginText, password });
 }
 
 export function requestPassword(email) {

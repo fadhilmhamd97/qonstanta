@@ -137,7 +137,7 @@ const TreeFolderContent = ({propsNode, onChoose}) => {
 
   const ChildProp = ({menus}) => {
     return (<>{menus.map((menu, i) => {
-        const {id, description, childs, icon, link} = menu;
+        const {id, description, hierarchyType, childs, icon, link} = menu;
         return (<StyledTreeItem  onClick={() => setContext(menu)} key={i} nodeId={id} labelText={description} labelIcon={IconProps(icon)}>
             {(childs.length > 0 && <ChildProp menus={childs} />)}
           </StyledTreeItem>

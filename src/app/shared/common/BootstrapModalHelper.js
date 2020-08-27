@@ -1,14 +1,22 @@
-import React from "react";
-import { Modal, Button } from "react-bootstrap";
+import React,{useEffect, useState} from "react";
+import { Modal, Button } from "react-bootstrap"
 
-const BootstrapModalHelper = ({action, children, size, title, onHide}) => {
+const BootstrapModalHelper = ({propsAction, children, size, title, delegateHideEvent, delegateSubmitEvent=undefined}) => {
 
     const {Header, Title, Body, Footer} = Modal
+
+    const [propsModalState, setModalState] = useState(false)
+
+    useEffect(cb => {
+        setModalState(propsAction)
+    }, [propsAction])
 
     return(<>
         <Modal
             size={size} 
             centered
+            show={propsModalState}
+            onHide={delegateHideEvent}
         >
             <Header closeButton>
                 <Title>
@@ -19,7 +27,8 @@ const BootstrapModalHelper = ({action, children, size, title, onHide}) => {
                 {children}
             </Body>
             <Footer>
-                <Button onClick={onHide}>Close</Button>
+                <Button onClick={delegateHideEvent}>Close</Button>
+                {delegateSubmitEvent !== undefined ? <Button onClick={delegateSubmitEvent}>Submit</Button> : <></>}
             </Footer>
         </Modal>
     </>)

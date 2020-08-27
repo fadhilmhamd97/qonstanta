@@ -41,40 +41,48 @@ export const reducer = persistReducer(
         const adminRole = [
           {id: 12, description: 'Dashboard', icon: 'dashboard', route: '/dashboard',childs: []},
           {id: 13, description: 'Try Out', icon: 'exam', route: '/tryout',childs: [
-            {id: 14, description: 'Pendaftaran', icon: 'note', route: 'master/tryout/register', childs: []},
-            {id: 15, description: 'Jadwal Tryout', icon: 'schedule', route: 'master/tryout/schedule', childs: []},
-            {id: 16, description: 'Riwayat Tryout', icon: 'history', route: 'master/tryout/history', childs: []}
+            {id: 14, description: 'Try Out Packet Type', icon: 'question-types', route:'/admin/tryout/type', childs:[]},
+            {id: 15, description: 'Try Out Packet', icon: 'question-packet', route: '/admin/tryout/packet', childs: []},
+            {id: 16, description: 'Try out Schedule', icon: 'times', route: '/admin/tryout/schedule', childs: []}
           ]},
-          {id: 17, description: 'Pembelajaran', icon: 'book', route: '/learn', childs: [
-            {id: 18, description: 'Master Ebook', icon: 'paper', route: '/admin/ebook', childs: []},
-            {id: 19, description: 'Master Video',  icon: 'videos', route: '/admin/videos', childs: []},
-            {id: 20, description: 'Master Soal', icon: 'exam', route: '/admin/question', childs: []}
+          {id: 17, description: 'Master Data', icon: 'book', route: '/learn', childs: [
+            {id: 18, description: 'Formula', icon: 'paper', route: '/admin/master/formula', childs: []},
+            {id: 19, description: 'Grade',  icon: 'videos', route: '/admin/master/videos', childs: []},
+            {id: 20, description: 'Major', icon: 'exam', route: '/admin/master/major', childs: []},
+            {id: 21, description: 'Course', icon: 'exam', route: '/admin/master/course', childs: []},
           ]},
-          {id: 21, description: 'Edu Live Class', icon: 'live', route: '/live', childs: [
-            {id: 22, description: 'Master Jadwal',icon: 'schedule', route: 'master/edu-live/schedule', childs: []}
+          {id: 22, description: 'Learning', icon: 'exam', route: '/admin/question', childs: [
+            {id: 23, description: 'Ebook', icon: 'exam', route: '/admin/question', childs: []},
+            {id: 24, description: 'Video', icon: 'exam', route: '/admin/question', childs: []},
           ]},
-          {id: 23, description: 'Siswa', icon: 'users', route: '/student', childs: [
-            {id: 24, description: 'Pendaftaran', icon: 'note', route: 'master/student/register', childs: []},
-            {id: 25, description: 'Manajemen Siswa', icon: 'groups', route: 'master/student/manage-student', childs: []}
+          // {id: 21, description: 'Edu Live Class', icon: 'live', route: '/live', childs: [
+          //   {id: 22, description: 'Master Jadwal',icon: 'schedule', route: '/admin/edulive', childs: []},
+          //   {id: 23, description: 'Master Request', icon: 'accessibility', route: '/admin/edulive/request', childs: []}
+          // ]},
+          {id: 25,description: 'Question Modules', icon: 'question', route: '/question', childs: [
+            {id: 26, description: 'Question Packet Type', icon: 'question-types', route: '/admin/module-questions/question-packet-type', childs: []},
+            {id: 27, description: 'Question Packet', icon: 'question-packet', route: '/admin/module-questions/question-packet', childs: []}
           ]},
-          {id: 26, description: 'Promosi', icon: 'promotion', route: '/promotion', childs: [
-            {id: 27, description: 'Tryout', icon: 'exam', route: 'master/promotion/try-out', childs: []}
-          ]}              
-          
+          // {id: 28, description: 'Siswa', icon: 'users', route: '/student', childs: [
+          //   {id: 29, description: 'Pendaftaran', icon: 'note', route: 'master/student/register', childs: []},
+          //   {id: 30, description: 'Manajemen Siswa', icon: 'groups', route: 'master/student/manage-student', childs: []}
+          // ]},
+          // {id: 31, description: 'Promosi', icon: 'promotion', route: '/promotion', childs: [
+          //   {id: 32, description: 'Tryout', icon: 'exam', route: 'master/promotion/try-out', childs: []}
+          // ]}              
         ]
 
         //dummy validation
         let _listNav = []
         let _adminProps = {}
 
-        if(authToken.email !== 'admin@admin.com')
+        if(authToken.email !== 'qonstanta.admin@gmail.com')
           _listNav = [...studentRole]
         else{
           _listNav = [...adminRole]
-          _adminProps = {..._adminProps, user_fullName: 'Administrator', user_email: 'admin@admin.com', profile_phoneNumber: '085890333486'}
         }
 
-        return { authToken, user: authToken.email !== 'admin@admin.com' ? authToken.email : JSON.stringify(_adminProps), propsUser: authToken.email !== 'admin@admin.com' ? authToken.userProps : _adminProps, roleConfig: _listNav, role: authToken.email === 'admin@admin.com' ? 'admin' : 'default' };
+        return { authToken, user: authToken.email, propsUser: authToken.userProps, roleConfig: _listNav, role: authToken.email === 'qonstanta.admin@gmail.com' ? 'admin' : 'default' };
       }
 
       case actionTypes.Register: {  

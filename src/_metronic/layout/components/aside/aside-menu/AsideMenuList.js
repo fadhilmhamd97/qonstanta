@@ -19,6 +19,11 @@ import
   PeopleIcon,
   GroupAddIcon,
   AttachMoneyIcon,
+  AccessibilityIcon,
+  LiveHelpIcon,
+  LibraryBooksIcon,
+  MenuBookIcon,
+  AccessTimeIcon
 } from "./AsideIcons"
 
 /* DUMB WAY */
@@ -47,6 +52,16 @@ const importIconByStatement = icon => {
       return(<PeopleIcon />)
     case 'groups':
       return(<GroupAddIcon />)
+    case 'accessibility':
+      return(<AccessibilityIcon />)
+    case 'question':
+      return(<LiveHelpIcon />)
+    case 'question-types':
+      return(<LibraryBooksIcon />)
+    case 'question-packet':
+      return(<MenuBookIcon />)
+    case 'times':
+      return(<AccessTimeIcon />)
     default:
       return(<AttachMoneyIcon />)
   }

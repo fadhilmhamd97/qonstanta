@@ -25,9 +25,9 @@ export function QuickUser(props) {
 
   useEffect(() => {
     //read local storage for user email
-    const {user_fullName, user_email, profile_phoneNumber} = JSON.parse(localStorage.getItem('user'))
+    const {fullName, email, phone} = JSON.parse(localStorage.getItem('user'))
     console.info(localStorage.getItem('user'))
-    setUser({user_fullName, user_email, profile_phoneNumber})
+    setUser({fullName, email, phone})
   },[])
 
 
@@ -83,7 +83,7 @@ export function QuickUser(props) {
                     </span>
                   </span>
                   <span className="navi-text text-muted text-hover-primary">
-                      {propsUser.user_fullName}      
+                      {propsUser.fullName}      
                   </span>
                 </span>
                 </a>
@@ -102,7 +102,7 @@ export function QuickUser(props) {
                     </span>
                   </span>
                   <span className="navi-text text-muted text-hover-primary">
-                      {propsUser.user_email}
+                      {propsUser.email}
                   </span>
                 </span>
                 </a>
@@ -121,7 +121,7 @@ export function QuickUser(props) {
                     </span>
                   </span>
                   <span className="navi-text text-muted text-hover-primary">
-                      {propsUser.profile_phoneNumber}
+                      {propsUser.phone}
                   </span>
                 </span>
                 </a>

@@ -11,6 +11,11 @@ import LiveTvIcon from '@material-ui/icons/LiveTv'
 import PeopleIcon from '@material-ui/icons/People'
 import GroupAddIcon from '@material-ui/icons/GroupAdd'
 import AttachMoneyIcon from '@material-ui/icons/AttachMoney'
+import AccessibilityIcon from '@material-ui/icons/Accessibility'
+import LiveHelpIcon from '@material-ui/icons/LiveHelp';
+import LibraryBooksIcon from '@material-ui/icons/LibraryBooks'
+import MenuBookIcon from '@material-ui/icons/MenuBook';
+import AccessTimeIcon from '@material-ui/icons/AccessTime';
 
 export {
             EventNoteIcon, 
@@ -25,5 +30,10 @@ export {
             LiveTvIcon,
             PeopleIcon,
             GroupAddIcon,
-            AttachMoneyIcon
+            AttachMoneyIcon,
+            AccessibilityIcon,
+            LiveHelpIcon,
+            LibraryBooksIcon,
+            MenuBookIcon,
+            AccessTimeIcon
         }
